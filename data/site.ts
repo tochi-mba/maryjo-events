@@ -32,90 +32,169 @@ export const navigation = [
   { label: 'Services', href: '#services' },
   { label: 'Approach', href: '#approach' },
   { label: 'About', href: '#about' },
+  { label: 'Event fit', href: '#event-fit' },
+  { label: 'What to expect', href: '#proof' },
+  { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' }
 ] as const
 
 export const services = [
   {
     title: 'Conferences',
-    text: 'Clear plans for agendas, guests, suppliers, timings, and all the small details that make the day feel steady.'
+    description:
+      'Multi-session days that need to run smoothly, from registration desks to the closing remarks.',
+    icon: 'presentation'
   },
   {
     title: 'Executive summits',
-    text: 'Thoughtful support for leadership groups who need the room, rhythm, and guest experience to feel considered.'
+    description:
+      'Smaller, higher-stakes gatherings where the details and the atmosphere both matter.',
+    icon: 'crown'
   },
   {
     title: 'Award nights',
-    text: 'A careful eye on the run of show, arrivals, stage moments, and the touches people remember afterwards.'
+    description:
+      'Celebrations that feel special, with timing, staging, and little touches handled for you.',
+    icon: 'trophy'
   },
   {
     title: 'Product launches',
-    text: 'Practical planning for a confident reveal, from guest flow and supplier notes to the moment everyone sees it.'
+    description:
+      'A clear moment to show something new, planned so the focus stays on what you are launching.',
+    icon: 'rocket'
   },
   {
     title: 'Team away days',
-    text: 'Warm, organised support for off-sites that need to feel useful, relaxed, and worth leaving the office for.'
+    description:
+      'Days out of the office that actually feel worthwhile, with the logistics quietly taken care of.',
+    icon: 'users'
   },
   {
     title: 'Networking evenings',
-    text: 'Easy, welcoming events where guests know where to go, what is happening, and why they are glad they came.'
+    description:
+      'Relaxed, well-paced evenings where your guests can connect without anything feeling stiff.',
+    icon: 'wine'
   }
 ] as const
 
 export const processSteps = [
   {
-    kicker: '01',
+    step: '01',
     title: 'I listen first',
-    text: 'I ask good questions about the people, the purpose, the pressure points, and what would make the event feel like a success.'
+    description:
+      'Before anything else, I want to understand what you are picturing, who is coming, and what would make the day feel right.',
+    icon: 'ear'
   },
   {
-    kicker: '02',
+    step: '02',
     title: 'I shape the plan',
-    text: 'I turn the brief into timings, supplier notes, guest considerations, and clear next steps so nothing important floats around in your head.'
+    description:
+      'I turn that conversation into a clear written plan, with the venue, suppliers, and timings mapped out so you can see it taking shape.',
+    icon: 'pencil-ruler'
   },
   {
-    kicker: '03',
+    step: '03',
     title: 'I keep checking',
-    text: 'I care about the details other people overlook: signage, arrivals, dietary notes, room flow, speaker needs, and the quiet fixes.'
+    description:
+      'As things move, I keep checking the details against the plan so nothing quietly slips through the cracks.',
+    icon: 'check-circle'
   },
   {
-    kicker: '04',
+    step: '04',
     title: 'I stay honest',
-    text: 'If something needs learning, asking, or solving, I say so early and get stuck in. New to the industry does not mean vague.'
+    description:
+      'If something is not working or is not worth the spend, I will tell you. You will always get my real opinion.',
+    icon: 'heart-handshake'
   }
 ] as const
 
 export const eventTypes = [
-  'First big conference',
-  'Leadership retreat',
-  'Company away day',
-  'Brand or product moment',
-  'Industry mixer',
-  'Awards or ceremony'
+  {
+    title: 'A first big conference',
+    description: 'The one where you want everything to feel considered and calm.'
+  },
+  {
+    title: 'A leadership retreat',
+    description: 'Time away that needs structure without feeling rigid.'
+  },
+  {
+    title: 'A company away day',
+    description: 'A proper break from the desk that still earns its place.'
+  },
+  {
+    title: 'A brand or product moment',
+    description: 'A launch or reveal that deserves a real sense of occasion.'
+  },
+  {
+    title: 'An industry mixer',
+    description: 'An evening built around easy conversation and good timing.'
+  },
+  {
+    title: 'An awards or ceremony',
+    description: 'A night of recognition, planned so it runs beautifully.'
+  }
 ] as const
 
 export const proofPoints = [
-  'A clear written plan after discovery',
-  'Supplier and venue questions captured early',
-  'Guest experience thought through from arrival to goodbye',
-  'Warm updates without pressure or jargon',
-  'A planner who cares because every brief still feels exciting'
+  {
+    title: 'A clear written plan after discovery',
+    description:
+      'Once we have talked it through, you get the plan in writing, so we are always looking at the same thing.',
+    icon: 'file-text'
+  },
+  {
+    title: 'Supplier and venue questions captured early',
+    description:
+      'I ask the awkward questions up front, so surprises are far less likely later on.',
+    icon: 'clipboard-list'
+  },
+  {
+    title: 'Guest experience thought through',
+    description:
+      'From the moment people arrive to the way they say goodbye, the small things get real attention.',
+    icon: 'sparkles'
+  },
+  {
+    title: 'Warm updates without pressure or jargon',
+    description:
+      'You hear from me in plain language, kept in the loop without being buried in noise.',
+    icon: 'message-circle'
+  }
 ] as const
 
 export const faqs = [
   {
-    question: 'What size events do you support?',
+    question: 'You are new to the industry - why should I trust you with my event?',
     answer:
-      'Businesses of all sizes are welcome. The first conversation is about what you need, not whether you sound big enough.'
+      'I am honest about being new, and I think that is a strength. Every brief still feels genuinely exciting to me, so you get real care and full attention rather than someone running on autopilot.'
   },
   {
-    question: 'Can you help if the idea is still messy?',
+    question: 'What size of business do you work with?',
     answer:
-      'Yes. I like the early questions: purpose, audience, mood, budget, timing, and what has to feel easy for your team.'
+      'Businesses of all sizes. Whether it is your first big conference or a regular fixture in the calendar, I would love to hear about it. The brief matters more to me than the headcount.'
   },
   {
-    question: 'Do you work across the UK and Ireland?',
+    question: 'Where do you work?',
     answer:
-      'That is the launch service area. For anything outside it, ask and I will be upfront about what is practical.'
+      'Across the UK and Ireland. Tell me where your event needs to happen and I will figure out how to make it work.'
+  },
+  {
+    question: 'How do we start?',
+    answer:
+      'We start with a conversation. You tell me what you have in mind, I listen properly, and then I shape that into a clear written plan. There is no pressure and no jargon.'
+  },
+  {
+    question: 'How involved do I need to be?',
+    answer:
+      'As much or as little as you like. Some people want to be in every detail, others want to hand it over and hear warm updates along the way. Both are completely fine.'
   }
+] as const
+
+export const marqueeItems = [
+  'Thoughtful planning',
+  'Warm updates',
+  'Details looked after',
+  'Honest conversations',
+  'Calm event days',
+  'UK & Ireland'
 ] as const

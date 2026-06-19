@@ -4,27 +4,27 @@
       <component :is="iconComponent" :size="22" stroke-width="1.8" />
     </div>
     <h3>{{ title }}</h3>
-    <p>{{ text }}</p>
+    <p>{{ description }}</p>
   </article>
 </template>
 
 <script setup lang="ts">
-import { CalendarDays, Handshake, Lightbulb, MapPinned, Presentation, Trophy } from 'lucide-vue-next'
+import { Crown, Presentation, Rocket, Trophy, Users, Wine } from 'lucide-vue-next'
 import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
-  text: string
-  icon: 'conference' | 'summit' | 'awards' | 'launch' | 'away-day' | 'networking'
+  description: string
+  icon: 'presentation' | 'crown' | 'trophy' | 'rocket' | 'users' | 'wine'
 }>()
 
 const icons = {
-  conference: Presentation,
-  summit: MapPinned,
-  awards: Trophy,
-  launch: Lightbulb,
-  'away-day': CalendarDays,
-  networking: Handshake
+  presentation: Presentation,
+  crown: Crown,
+  trophy: Trophy,
+  rocket: Rocket,
+  users: Users,
+  wine: Wine
 }
 
 const iconComponent = computed(() => icons[props.icon])

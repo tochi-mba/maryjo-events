@@ -1,165 +1,243 @@
 <template>
-  <div>
-    <header class="site-header">
-      <Wordmark link />
-      <nav aria-label="Main navigation">
-        <a v-for="item in navigation" :key="item.href" :href="item.href">{{ item.label }}</a>
-      </nav>
-      <a class="header-cta" href="#contact">Enquire</a>
-    </header>
+  <div id="top">
+    <SiteHeader :navigation="navigation" />
 
     <main>
       <section class="hero section-shell" aria-labelledby="hero-title">
-        <div class="hero__copy">
-          <p class="eyebrow">{{ brand.label }}</p>
+        <Reveal class-name="hero__copy">
+          <p class="hero__badge">
+            <MapPin :size="15" aria-hidden="true" />
+            Corporate events / UK & Ireland
+          </p>
           <h1 id="hero-title">{{ brand.tagline }}</h1>
           <p class="hero__lead">
-            Fresh energy. Genuine care. A whole lot of enthusiasm for getting it right.
+            I am Mary-Jo. I put real thought into every event I take on, from the first conversation to the final goodbye.
           </p>
-          <p>
-            I am Mary-Jo, a corporate event planner who genuinely loves the details other people overlook.
+          <p class="hero__text">
+            New to the industry, but not to hard work or attention to detail. I ask careful questions, keep the plan clear, and care about the details other people overlook.
           </p>
           <div class="hero__actions">
             <a class="button button--primary" href="#contact">
-              <MessageCircle :size="18" aria-hidden="true" />
               Tell me about your event
+              <ArrowRight :size="18" aria-hidden="true" />
             </a>
             <a class="button button--ghost" href="#approach">
-              <ArrowDown :size="18" aria-hidden="true" />
               See my approach
+              <ArrowDown :size="18" aria-hidden="true" />
             </a>
           </div>
-        </div>
-        <GeneratedImage
-          class="hero__image"
-          :src="publicAsset('/images/hero-event-planning.png')"
-          alt="Corporate event planning table with notebooks, stationery, flowers, and a venue being prepared"
-          tone="dark"
-        />
+        </Reveal>
+
+        <Reveal :delay="120" class-name="hero__visual">
+          <ImagePanel
+            :src="publicAsset('/images/hero-premium-event.png')"
+            alt="Warm corporate event planning scene with stationery, flowers, venue details, and thoughtful planning materials"
+            caption="Every detail, considered"
+            variant="hero"
+            priority
+          />
+        </Reveal>
+        <a class="hero__scroll" href="#services" aria-label="Scroll to services">
+          <span />
+        </a>
       </section>
 
       <section id="services" class="section-shell section-block" aria-labelledby="services-title">
-        <SectionHeader
-          eyebrow="Services"
-          title="Events with the details looked after"
-          text="Whether it is your first big conference or a company away day, I will make sure every detail is taken care of."
-        />
+        <Reveal as="header">
+          <SectionHeader
+            eyebrow="What I plan"
+            title="Events I would love to help with"
+            text="Whatever the occasion, I will figure out how to make it happen and keep the details from slipping through the cracks."
+          />
+        </Reveal>
         <div class="service-grid">
-          <ServiceCard
+          <Reveal
             v-for="(service, index) in services"
             :key="service.title"
-            :title="service.title"
-            :text="service.text"
-            :icon="serviceIcons[index]"
-          />
+            :delay="index * 70"
+          >
+            <ServiceCard v-bind="service" />
+          </Reveal>
         </div>
       </section>
+
+      <MarqueeBand :items="marqueeItems" />
 
       <section id="approach" class="approach section-shell section-block" aria-labelledby="approach-title">
-        <div>
+        <Reveal>
           <SectionHeader
-            eyebrow="Approach"
-            title="Thoughtful from the first question"
-            text="No pretending to be bigger than I am. I listen carefully, plan clearly, and stay honest about what needs doing."
+            eyebrow="How I work"
+            title="A calm, honest way of planning"
+            text="No jargon, no pressure. Just a clear process that keeps us both looking at the same picture."
           />
-          <div class="process-grid">
-            <ProcessStep v-for="step in processSteps" :key="step.kicker" v-bind="step" />
-          </div>
+        </Reveal>
+        <div class="process-grid">
+          <Reveal
+            v-for="(step, index) in processSteps"
+            :key="step.step"
+            :delay="index * 80"
+          >
+            <ProcessStep v-bind="step" />
+          </Reveal>
         </div>
-        <GeneratedImage
-          :src="publicAsset('/images/process-details.png')"
-          alt="Event planning papers, checklist, colour swatches, and tea arranged on a bright desk"
-        />
       </section>
 
-      <section id="about" class="about-band" aria-labelledby="about-title">
-        <div class="section-shell about-band__inner">
-          <p class="eyebrow">About Mary-Jo</p>
-          <h2 id="about-title">New to the industry, not new to hard work.</h2>
+      <section id="about" class="about section-shell section-block" aria-labelledby="about-title">
+        <Reveal class-name="about__image">
+          <ImagePanel
+            :src="publicAsset('/images/process-details.png')"
+            alt="Event planning papers, checklist, colour swatches, and tea arranged on a bright desk"
+            variant="portrait"
+          />
+        </Reveal>
+        <Reveal :delay="100" class-name="about__copy">
+          <SectionHeader eyebrow="About Mary-Jo" title="Hello, I am Mary-Jo" />
           <p>
-            I am building Mary-Jo Corporate Events with curiosity, care, and the kind of attention that comes from wanting every brief to matter. I will not fake years I do not have. I will ask better questions, keep learning, and put real thought into every event I take on.
+            I am a corporate event planner who genuinely loves the details other people overlook: the run of the day, the way guests are welcomed, the moment something could go wrong and quietly does not.
           </p>
-        </div>
+          <p>
+            I am honest about where I am in my journey, and I think that is exactly why I bring so much care and curiosity to every brief.
+          </p>
+          <figure class="quote-card">
+            <Quote :size="26" aria-hidden="true" />
+            <blockquote>Tell me what you need, and I will figure out how to make it happen.</blockquote>
+            <figcaption>Mary-Josephine Murphy, Founder</figcaption>
+          </figure>
+        </Reveal>
       </section>
 
-      <section class="section-shell section-block fit-grid" aria-labelledby="fit-title">
-        <div>
-          <SectionHeader
-            eyebrow="Event fit"
-            title="For businesses of all sizes"
-            text="If the event matters to your team, it is worth planning properly."
-          />
-          <ul aria-label="Event types" class="event-list">
-            <li v-for="eventType in eventTypes" :key="eventType">
-              <Check :size="18" aria-hidden="true" />
-              {{ eventType }}
-            </li>
-          </ul>
-        </div>
-        <aside class="proof-panel" aria-label="What clients can expect">
-          <h3>What you can expect</h3>
-          <ul>
-            <li v-for="point in proofPoints" :key="point">{{ point }}</li>
-          </ul>
-        </aside>
-      </section>
-
-      <section class="faq-band" aria-labelledby="faq-title">
-        <div class="section-shell section-block">
-          <SectionHeader eyebrow="Questions" title="A few things worth asking early" />
-          <div id="faq-title" class="faq-grid">
-            <article v-for="faq in faqs" :key="faq.question">
-              <h3>{{ faq.question }}</h3>
-              <p>{{ faq.answer }}</p>
-            </article>
+      <section id="event-fit" class="event-fit section-block" aria-labelledby="event-fit-title">
+        <div class="section-shell">
+          <Reveal>
+            <SectionHeader
+              eyebrow="Is this for you?"
+              title="For businesses of all sizes"
+              text="If you recognise your event below, we should talk. The brief matters to me far more than the headcount."
+              on-dark
+            />
+          </Reveal>
+          <div class="event-grid">
+            <Reveal
+              v-for="(eventType, index) in eventTypes"
+              :key="eventType.title"
+              as="article"
+              :delay="index * 65"
+              class-name="event-card"
+            >
+              <h3>{{ eventType.title }}</h3>
+              <p>{{ eventType.description }}</p>
+            </Reveal>
           </div>
         </div>
       </section>
+
+      <section id="proof" class="section-shell section-block proof" aria-labelledby="proof-title">
+        <Reveal>
+          <SectionHeader
+            eyebrow="What to expect"
+            title="What working with me looks like"
+            text="No fake reviews or borrowed logos here. Just a clear, honest sense of what you will actually get."
+          />
+        </Reveal>
+        <div class="proof-grid">
+          <Reveal
+            v-for="(point, index) in proofPoints"
+            :key="point.title"
+            as="article"
+            :delay="index * 80"
+            class-name="proof-card"
+          >
+            <span class="proof-card__icon" aria-hidden="true">
+              <component :is="proofIcon(point.icon)" :size="21" stroke-width="1.8" />
+            </span>
+            <div>
+              <h3>{{ point.title }}</h3>
+              <p>{{ point.description }}</p>
+            </div>
+          </Reveal>
+        </div>
+        <FlourishDivider class-name="proof__flourish" />
+        <p class="proof__note">
+          And honestly? You get a planner who cares, because every brief still feels exciting to me.
+        </p>
+      </section>
+
+      <FAQAccordion :faqs="faqs" />
 
       <section id="contact" class="contact section-shell section-block" aria-labelledby="contact-title">
-        <div class="contact__intro">
+        <Reveal class-name="contact__intro">
           <SectionHeader
-            eyebrow="Contact"
+            eyebrow="Get in touch"
             title="Got an event in mind?"
-            text="I would love to hear about it. Share what you know so far, and I will come back with thoughtful next questions."
+            text="I would love to hear about it. Tell me a little below and I will come back to you personally."
           />
-          <div class="contact__links">
+          <div class="contact__email-card">
+            <p>Prefer to email?</p>
             <a :href="`mailto:${siteConfig.contact.email}`">
               <Mail :size="18" aria-hidden="true" />
               {{ siteConfig.contact.email }}
             </a>
-            <span>
-              <MapPin :size="18" aria-hidden="true" />
-              {{ brand.serviceArea }}
-            </span>
           </div>
-        </div>
-        <ContactForm :form-action="formAction" />
+          <Wordmark class="contact__wordmark" />
+        </Reveal>
+        <Reveal :delay="120">
+          <ContactForm :form-action="formAction" />
+        </Reveal>
       </section>
     </main>
 
     <footer class="site-footer">
-      <div>
-        <Wordmark />
-        <p>{{ brand.label }} / {{ brand.serviceArea }} / Brand Guidelines</p>
+      <div class="section-shell site-footer__inner">
+        <div>
+          <Wordmark on-dark />
+          <p>Freelance corporate event planning, thoughtfully done. I would love to hear what you have in mind.</p>
+          <span>
+            <MapPin :size="17" aria-hidden="true" />
+            Working across the {{ brand.serviceArea }}
+          </span>
+        </div>
+        <nav aria-label="Footer navigation">
+          <a v-for="item in navigation" :key="item.href" :href="item.href">{{ item.label }}</a>
+          <NuxtLink to="/privacy">Privacy</NuxtLink>
+        </nav>
       </div>
-      <nav aria-label="Footer navigation">
-        <a href="#services">Services</a>
-        <a href="#contact">Contact</a>
-        <NuxtLink to="/privacy">Privacy</NuxtLink>
-      </nav>
+      <div class="section-shell site-footer__bottom">
+        <p>&copy; {{ year }} {{ brand.name }}. Founded by {{ brand.founder }}.</p>
+      </div>
     </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ArrowDown, Check, Mail, MapPin, MessageCircle } from 'lucide-vue-next'
-import { brand, eventTypes, faqs, navigation, processSteps, proofPoints, services, siteConfig } from '~/data/site'
+import {
+  ArrowDown,
+  ArrowRight,
+  ClipboardList,
+  FileText,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Quote,
+  Sparkles
+} from 'lucide-vue-next'
+import { computed } from 'vue'
+import {
+  brand,
+  eventTypes,
+  faqs,
+  marqueeItems,
+  navigation,
+  processSteps,
+  proofPoints,
+  services,
+  siteConfig
+} from '~/data/site'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.app.baseURL
 const siteUrl = String(runtimeConfig.public.siteUrl).replace(/\/$/, '')
 const socialPreviewImage = `${siteUrl}/images/social-preview.png`
+const year = new Date().getFullYear()
 
 const publicAsset = (path: string) => `${baseUrl.replace(/\/$/, '')}${path}`
 const routePath = (path: string) => {
@@ -170,7 +248,18 @@ const routePath = (path: string) => {
   return `${baseUrl.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`
 }
 
-const formAction = routePath(siteConfig.contact.formAction)
+const formAction = computed(() => routePath(siteConfig.contact.formAction))
+
+const proofIcons = {
+  'file-text': FileText,
+  'clipboard-list': ClipboardList,
+  sparkles: Sparkles,
+  'message-circle': MessageCircle
+}
+
+function proofIcon(icon: keyof typeof proofIcons) {
+  return proofIcons[icon]
+}
 
 useSeoMeta({
   title: siteConfig.meta.title,
@@ -200,6 +289,4 @@ useHead({
     }
   ]
 })
-
-const serviceIcons = ['conference', 'summit', 'awards', 'launch', 'away-day', 'networking'] as const
 </script>

@@ -1,15 +1,33 @@
 <template>
   <article class="process-step">
-    <p>{{ kicker }}</p>
+    <div class="process-step__top">
+      <span class="process-step__icon" aria-hidden="true">
+        <component :is="iconComponent" :size="21" stroke-width="1.8" />
+      </span>
+      <p>{{ step }}</p>
+    </div>
     <h3>{{ title }}</h3>
-    <span>{{ text }}</span>
+    <span>{{ description }}</span>
   </article>
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  kicker: string
+import { CheckCircle2, Ear, HeartHandshake, PencilRuler } from 'lucide-vue-next'
+import { computed } from 'vue'
+
+const props = defineProps<{
+  step: string
   title: string
-  text: string
+  description: string
+  icon: 'ear' | 'pencil-ruler' | 'check-circle' | 'heart-handshake'
 }>()
+
+const icons = {
+  ear: Ear,
+  'pencil-ruler': PencilRuler,
+  'check-circle': CheckCircle2,
+  'heart-handshake': HeartHandshake
+}
+
+const iconComponent = computed(() => icons[props.icon])
 </script>

@@ -1,8 +1,8 @@
 <template>
-  <NuxtLink v-if="link" class="wordmark" to="/" aria-label="Mary-Jo Corporate Events home">
+  <NuxtLink v-if="link" class="wordmark" :class="{ 'wordmark--dark': onDark }" to="/" aria-label="Mary-Jo Corporate Events home">
     <span class="wordmark__mary">Mary</span><span class="wordmark__jo">-Jo</span>
   </NuxtLink>
-  <span v-else class="wordmark" aria-label="Mary-Jo">
+  <span v-else class="wordmark" :class="{ 'wordmark--dark': onDark }" aria-label="Mary-Jo">
     <span class="wordmark__mary">Mary</span><span class="wordmark__jo">-Jo</span>
   </span>
 </template>
@@ -15,9 +15,11 @@ defineOptions({
 withDefaults(
   defineProps<{
     link?: boolean
+    onDark?: boolean
   }>(),
   {
-    link: false
+    link: false,
+    onDark: false
   }
 )
 </script>
