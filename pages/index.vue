@@ -32,7 +32,7 @@
         </div>
         <GeneratedImage
           class="hero__image"
-          src="/images/hero-event-planning.png"
+          :src="publicAsset('/images/hero-event-planning.png')"
           alt="Corporate event planning table with notebooks, stationery, flowers, and a venue being prepared"
           tone="dark"
         />
@@ -67,7 +67,7 @@
           </div>
         </div>
         <GeneratedImage
-          src="/images/process-details.png"
+          :src="publicAsset('/images/process-details.png')"
           alt="Event planning papers, checklist, colour swatches, and tea arranged on a bright desk"
         />
       </section>
@@ -134,7 +134,7 @@
             </span>
           </div>
         </div>
-        <ContactForm :form-action="siteConfig.contact.formAction" />
+        <ContactForm :form-action="formAction" />
       </section>
     </main>
 
@@ -156,12 +156,28 @@
 import { ArrowDown, Check, Mail, MapPin, MessageCircle } from 'lucide-vue-next'
 import { brand, eventTypes, faqs, navigation, processSteps, proofPoints, services, siteConfig } from '~/data/site'
 
+const runtimeConfig = useRuntimeConfig()
+const baseUrl = runtimeConfig.app.baseURL
+const siteUrl = String(runtimeConfig.public.siteUrl).replace(/\/$/, '')
+const socialPreviewImage = `${siteUrl}/images/social-preview.png`
+
+const publicAsset = (path: string) => `${baseUrl.replace(/\/$/, '')}${path}`
+const routePath = (path: string) => {
+  if (/^https?:\/\//.test(path)) {
+    return path
+  }
+
+  return `${baseUrl.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`
+}
+
+const formAction = routePath(siteConfig.contact.formAction)
+
 useSeoMeta({
   title: siteConfig.meta.title,
   description: siteConfig.meta.description,
   ogTitle: siteConfig.meta.title,
   ogDescription: siteConfig.meta.description,
-  ogImage: '/images/social-preview.png',
+  ogImage: socialPreviewImage,
   twitterCard: 'summary_large_image'
 })
 
@@ -176,9 +192,9 @@ useHead({
         founder: brand.founder,
         slogan: brand.tagline,
         areaServed: brand.serviceArea,
-        url: siteConfig.meta.url,
+        url: siteUrl,
         email: siteConfig.contact.email,
-        image: `${siteConfig.meta.url}/images/social-preview.png`,
+        image: socialPreviewImage,
         serviceType: services.map((service) => service.title)
       })
     }

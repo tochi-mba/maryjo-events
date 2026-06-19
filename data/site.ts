@@ -19,7 +19,7 @@ export const siteConfig = {
     title: 'Mary-Jo Corporate Events | Your event, thoughtfully planned',
     description:
       'Warm, thoughtful corporate event planning for conferences, away days, launches, award nights, and leadership retreats across the UK and Ireland.',
-    url: 'https://example.com'
+    url: 'https://maryjo-events.com'
   },
   contact: {
     email: 'hello@maryjo.events',

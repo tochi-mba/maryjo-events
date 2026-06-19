@@ -1,5 +1,8 @@
 import { siteConfig } from './data/site'
 
+const siteUrl = process.env.NUXT_PUBLIC_SITE_URL ?? siteConfig.meta.url
+const socialPreviewUrl = `${siteUrl.replace(/\/$/, '')}/images/social-preview.png`
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   devtools: { enabled: false },
@@ -16,6 +19,7 @@ export default defineNuxtConfig({
     }
   },
   app: {
+    baseURL: process.env.NUXT_APP_BASE_URL ?? '/',
     head: {
       htmlAttrs: { lang: 'en-GB' },
       title: siteConfig.meta.title,
@@ -26,18 +30,18 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { property: 'og:title', content: siteConfig.meta.title },
         { property: 'og:description', content: siteConfig.meta.description },
-        { property: 'og:image', content: '/images/social-preview.png' },
+        { property: 'og:image', content: socialPreviewUrl },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: siteConfig.meta.title },
         { name: 'twitter:description', content: siteConfig.meta.description },
-        { name: 'twitter:image', content: '/images/social-preview.png' }
+        { name: 'twitter:image', content: socialPreviewUrl }
       ],
-      link: [{ rel: 'canonical', href: siteConfig.meta.url }]
+      link: [{ rel: 'canonical', href: siteUrl }]
     }
   },
   runtimeConfig: {
     public: {
-      siteUrl: siteConfig.meta.url,
+      siteUrl,
       formAction: siteConfig.contact.formAction,
       calendarUrl: siteConfig.contact.calendarUrl,
       contactEmail: siteConfig.contact.email

@@ -1,6 +1,26 @@
 import { spawn } from 'node:child_process'
+import { createServer } from 'node:net'
 
-const server = spawn(process.execPath, ['scripts/static-server.mjs', '.output/public', '3000'], {
+async function findPort(start = 3000) {
+  for (let port = start; port < start + 20; port += 1) {
+    const available = await new Promise((resolve) => {
+      const probe = createServer()
+      probe.once('error', () => resolve(false))
+      probe.once('listening', () => {
+        probe.close(() => resolve(true))
+      })
+      probe.listen(port, '127.0.0.1')
+    })
+
+    if (available) return port
+  }
+
+  throw new Error('Could not find an available local port for e2e tests.')
+}
+
+const port = await findPort(Number(process.env.E2E_PORT || 3000))
+const baseUrl = `http://127.0.0.1:${port}`
+const server = spawn(process.execPath, ['scripts/static-server.mjs', '.output/public', String(port)], {
   stdio: ['ignore', 'pipe', 'pipe'],
   shell: false
 })
@@ -35,6 +55,7 @@ function runPlaywright() {
   return new Promise((resolve) => {
     const command = process.platform === 'win32' ? 'npx.cmd' : 'npx'
     const child = spawn(command, ['playwright', 'test'], {
+      env: { ...process.env, PLAYWRIGHT_BASE_URL: baseUrl },
       stdio: 'inherit',
       shell: process.platform === 'win32'
     })

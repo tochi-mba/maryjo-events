@@ -22,3 +22,17 @@ Use either:
 - VS Code Live Server from this workspace. `.vscode/settings.json` points Live Server at `.output/public`, so absolute Nuxt asset URLs such as `/_nuxt/...` and `/images/...` resolve correctly.
 
 Do not serve the workspace root as the website root, or generated Nuxt assets will 404.
+
+## GitHub Pages deployment
+
+This repo deploys through `.github/workflows/deploy-github-pages.yml`.
+
+In GitHub, go to `Settings` -> `Pages` and set `Build and deployment` to `GitHub Actions`. Set the custom domain to:
+
+`maryjo-events.com`
+
+Every push to `main` will generate the static site and publish `.output/public` to:
+
+`https://maryjo-events.com/`
+
+The generated `public/CNAME` file keeps the custom domain attached when GitHub Pages deploys. Local development should use `npm run dev`; `npm run generate` is kept for the deployment/static build only.
