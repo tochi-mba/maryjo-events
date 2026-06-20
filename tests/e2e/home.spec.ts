@@ -11,8 +11,11 @@ test('homepage has core content and a usable contact form', async ({ page }) => 
   await page.getByRole('link', { name: 'Tell me about your event' }).click()
   await expect(page.getByRole('heading', { name: 'Got an event in mind?' })).toBeVisible()
 
+  await expect(page.locator('form.contact-form')).toHaveAttribute('method', 'post')
+  await expect(page.locator('input[name="website"]')).toHaveCount(1)
+
   const submit = page.getByRole('button', { name: 'Send enquiry' })
-  await expect(submit).toBeDisabled()
+  await expect(submit).toBeEnabled()
   await page.getByLabel('Name').fill('Ava')
   await page.getByLabel('Email').fill('ava@example.com')
   await page.getByLabel('Event type').selectOption('Product launch')
@@ -28,13 +31,12 @@ test('homepage has core content and a usable contact form', async ({ page }) => 
 test('contact form highlights invalid fields and uses a bottom summary', async ({ page }) => {
   await page.goto('/#contact')
 
-  await page.getByLabel('Name').focus()
-  await page.getByLabel('Name').blur()
   await page.getByLabel('Email').fill('not-an-email')
-  await page.getByLabel('Email').blur()
+  await page.getByRole('button', { name: 'Send enquiry' }).click()
 
   await expect(page.locator('.form-field.is-invalid').filter({ has: page.getByLabel('Name') })).toBeVisible()
   await expect(page.locator('.form-field.is-invalid').filter({ has: page.getByLabel('Email') })).toBeVisible()
+  await expect(page.locator('.form-field.is-invalid').filter({ has: page.getByLabel('Event type') })).toBeVisible()
   await expect(page.getByText('A few details still need attention:')).toBeVisible()
   await expect(page.locator('#form-errors').getByText('Add the name Mary-Jo should reply to.')).toBeVisible()
 })

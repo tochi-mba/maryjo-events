@@ -22,7 +22,8 @@ describe('contact validation', () => {
       location: true,
       guestCount: true,
       message: true,
-      consent: true
+      consent: true,
+      website: false
     })
   })
 
@@ -36,8 +37,25 @@ describe('contact validation', () => {
         location: 'London',
         guestCount: '80',
         message: 'I need help planning a leadership retreat.',
-        consent: true
+        consent: true,
+        website: ''
       })
     ).toBe(true)
+  })
+
+  it('rejects honeypot submissions', () => {
+    expect(
+      isContactValid({
+        name: 'Ava',
+        email: 'ava@example.com',
+        eventType: 'Product launch',
+        date: '2099-06-19',
+        location: 'London',
+        guestCount: '80',
+        message: 'I need help planning a product launch for around 80 guests.',
+        consent: true,
+        website: 'https://spam.example'
+      })
+    ).toBe(false)
   })
 })

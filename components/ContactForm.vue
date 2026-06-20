@@ -2,10 +2,22 @@
   <form
     class="contact-form"
     :action="formAction"
-    method="get"
+    method="post"
     novalidate
     @submit="handleSubmit"
   >
+    <div class="honeypot-field" aria-hidden="true">
+      <label for="website">Website</label>
+      <input
+        id="website"
+        v-model.trim="form.website"
+        name="website"
+        type="text"
+        autocomplete="off"
+        tabindex="-1"
+      >
+    </div>
+
     <div class="form-grid">
       <div class="form-field" :class="{ 'is-invalid': showError('name') }">
         <div class="field-label">
@@ -204,7 +216,7 @@
       </ul>
     </div>
 
-    <button class="button button--primary" type="submit" :disabled="!isValid">
+    <button class="button button--primary" type="submit">
       <Send :size="18" aria-hidden="true" />
       Send enquiry
     </button>
@@ -230,7 +242,8 @@ const form = reactive({
   guestCount: '',
   budget: '',
   message: '',
-  consent: false
+  consent: false,
+  website: ''
 })
 
 const touched = reactive<Record<string, boolean>>({})

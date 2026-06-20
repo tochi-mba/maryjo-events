@@ -248,7 +248,7 @@ const routePath = (path: string) => {
   return `${baseUrl.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`
 }
 
-const formAction = computed(() => routePath(siteConfig.contact.formAction))
+const formAction = computed(() => routePath(String(runtimeConfig.public.formAction || siteConfig.contact.formAction)))
 
 const proofIcons = {
   'file-text': FileText,

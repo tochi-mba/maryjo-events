@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl,
-      formAction: siteConfig.contact.formAction,
+      formAction: process.env.NUXT_PUBLIC_FORM_ENDPOINT ?? siteConfig.contact.formAction,
       calendarUrl: siteConfig.contact.calendarUrl,
       contactEmail: siteConfig.contact.email
     }

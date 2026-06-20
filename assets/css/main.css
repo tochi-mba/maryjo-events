@@ -1037,6 +1037,14 @@ h3 {
   clip: rect(0, 0, 0, 0);
 }
 
+.honeypot-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .field-label {
   display: flex;
   gap: 8px;

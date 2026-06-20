@@ -22,8 +22,9 @@ export const siteConfig = {
     url: 'https://maryjo-events.com'
   },
   contact: {
-    email: 'hello@maryjo.events',
-    formAction: '/thank-you',
+    email: 'tochimba26@gmail.com',
+    formAction:
+      'https://script.google.com/macros/s/AKfycby3qsSzH0HD6lqffPJLcSVXnm7vXv5K_oJRTzyURV70qeje3aCL2_veW3HUikoiZUUX9A/exec',
     calendarUrl: ''
   }
 } as const

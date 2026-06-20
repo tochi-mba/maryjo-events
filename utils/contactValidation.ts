@@ -7,6 +7,7 @@ export type ContactValidationInput = {
   guestCount: string | number | null | undefined
   message: string | number | null | undefined
   consent: boolean | string | null | undefined
+  website?: string | number | null | undefined
 }
 
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -40,6 +41,7 @@ export function getContactErrors(input: ContactValidationInput) {
   const location = text(input.location)
   const guestCount = text(input.guestCount)
   const message = text(input.message)
+  const website = text(input.website)
 
   return {
     name: name.length === 0,
@@ -49,7 +51,8 @@ export function getContactErrors(input: ContactValidationInput) {
     location: location.length === 0,
     guestCount: !guestCountPattern.test(guestCount),
     message: message.length < minimumMessageLength || message.length > maximumMessageLength,
-    consent: !hasConsent(input.consent)
+    consent: !hasConsent(input.consent),
+    website: website.length > 0
   }
 }
 
