@@ -124,7 +124,7 @@
               :delay="index * 65"
               class-name="event-card"
             >
-              <h3>{{ eventType.title }}</h3>
+              <p class="card-title">{{ eventType.title }}</p>
               <p>{{ eventType.description }}</p>
             </Reveal>
           </div>
@@ -151,7 +151,7 @@
               <component :is="proofIcon(point.icon)" :size="21" stroke-width="1.8" />
             </span>
             <div>
-              <h3>{{ point.title }}</h3>
+              <p class="card-title">{{ point.title }}</p>
               <p>{{ point.description }}</p>
             </div>
           </Reveal>
@@ -197,7 +197,7 @@
           </span>
         </div>
         <nav aria-label="Footer navigation">
-          <a v-for="item in navigation" :key="item.href" :href="item.href">{{ item.label }}</a>
+          <a v-for="item in footerNavigation" :key="item.href" :href="item.href">{{ item.label }}</a>
           <NuxtLink to="/privacy">Privacy</NuxtLink>
         </nav>
       </div>
@@ -249,6 +249,15 @@ const routePath = (path: string) => {
 }
 
 const formAction = computed(() => routePath(String(runtimeConfig.public.formAction || siteConfig.contact.formAction)))
+const footerNavigation = [
+  { label: 'Services overview', href: '#services' },
+  { label: 'Planning approach', href: '#approach' },
+  { label: 'About Mary-Jo', href: '#about' },
+  { label: 'Event fit guide', href: '#event-fit' },
+  { label: 'Working expectations', href: '#proof' },
+  { label: 'FAQ answers', href: '#faq' },
+  { label: 'Contact Mary-Jo', href: '#contact' }
+]
 
 const proofIcons = {
   'file-text': FileText,

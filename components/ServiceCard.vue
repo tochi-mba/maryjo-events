@@ -3,7 +3,7 @@
     <div class="service-card__icon" aria-hidden="true">
       <component :is="iconComponent" :size="22" stroke-width="1.8" />
     </div>
-    <h3>{{ title }}</h3>
+    <p class="card-title">{{ title }}</p>
     <p>{{ description }}</p>
   </article>
 </template>

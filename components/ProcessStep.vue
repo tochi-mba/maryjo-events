@@ -6,7 +6,7 @@
       </span>
       <p>{{ step }}</p>
     </div>
-    <h3>{{ title }}</h3>
+    <p class="card-title">{{ title }}</p>
     <span>{{ description }}</span>
   </article>
 </template>
