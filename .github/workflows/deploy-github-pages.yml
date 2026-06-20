@@ -35,10 +35,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Install dependencies
-        run: |
-          corepack enable
-          npm --version
-          npm ci
+        run: npm ci
 
       - name: Check types
         run: npm run typecheck
