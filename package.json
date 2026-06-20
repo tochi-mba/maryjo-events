@@ -34,6 +34,9 @@
   },
   "packageManager": "npm@10.9.8",
   "overrides": {
+    "@eslint/config-inspector": {
+      "cac": "7.0.0"
+    },
     "@nuxt/schema": "3.21.8",
     "vite": "7.3.5"
   }
