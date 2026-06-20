@@ -1,14 +1,4 @@
-export type ContactValidationInput = {
-  name: string | number | null | undefined
-  email: string | number | null | undefined
-  eventType: string | number | null | undefined
-  date: string | number | null | undefined
-  location: string | number | null | undefined
-  guestCount: string | number | null | undefined
-  message: string | number | null | undefined
-  consent: boolean | string | null | undefined
-  website?: string | number | null | undefined
-}
+import type { ContactErrors, ContactFormInput } from '~/types/contact'
 
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const guestCountPattern = /^[1-9]\d*$/
@@ -33,7 +23,7 @@ function isPastDate(value: string) {
   return Number.isNaN(selected.getTime()) || selected < today
 }
 
-export function getContactErrors(input: ContactValidationInput) {
+export function getContactErrors(input: ContactFormInput): ContactErrors {
   const name = text(input.name)
   const email = text(input.email)
   const eventType = text(input.eventType)
@@ -56,6 +46,6 @@ export function getContactErrors(input: ContactValidationInput) {
   }
 }
 
-export function isContactValid(input: ContactValidationInput) {
+export function isContactValid(input: ContactFormInput) {
   return !Object.values(getContactErrors(input)).some(Boolean)
 }

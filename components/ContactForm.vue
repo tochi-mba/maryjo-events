@@ -83,12 +83,7 @@
           @blur="touch('eventType')"
         >
           <option value="">Choose the closest fit</option>
-          <option>Conference</option>
-          <option>Leadership retreat</option>
-          <option>Award night</option>
-          <option>Product launch</option>
-          <option>Team away day</option>
-          <option>Networking evening</option>
+          <option v-for="option in eventTypeOptions" :key="option">{{ option }}</option>
         </select>
       </div>
 
@@ -160,10 +155,7 @@
         </div>
         <select id="budget" v-model="form.budget" name="budget">
           <option value="">I am not sure yet</option>
-          <option>Under 5k</option>
-          <option>5k to 15k</option>
-          <option>15k to 30k</option>
-          <option>30k plus</option>
+          <option v-for="option in budgetOptions" :key="option">{{ option }}</option>
         </select>
       </div>
     </div>
@@ -226,39 +218,23 @@
 <script setup lang="ts">
 import { Info, Send } from 'lucide-vue-next'
 import { computed, reactive } from 'vue'
+import {
+  budgetOptions,
+  contactFieldMessages,
+  contactRequiredFields,
+  createContactFormState,
+  eventTypeOptions
+} from '~/utils/contactForm'
 import { getContactErrors } from '~/utils/contactValidation'
 
 const props = defineProps<{
   formAction: string
 }>()
 
-const form = reactive({
-  name: '',
-  email: '',
-  company: '',
-  eventType: '',
-  date: '',
-  location: '',
-  guestCount: '',
-  budget: '',
-  message: '',
-  consent: false,
-  website: ''
-})
+const form = reactive(createContactFormState())
 
 const touched = reactive<Record<string, boolean>>({})
-type RequiredField = 'name' | 'email' | 'eventType' | 'date' | 'location' | 'guestCount' | 'message' | 'consent'
-
-const fieldMessages: Record<RequiredField, string> = {
-  name: 'Add the name Mary-Jo should reply to.',
-  email: 'Use an email address Mary-Jo can reply to.',
-  eventType: 'Choose the option that is closest to your event.',
-  date: 'Pick the likely event date. It can be approximate for now.',
-  location: 'Add the town, city, venue, or region if you know it.',
-  guestCount: 'Use numbers only, even if it is an estimate.',
-  message: 'Share at least 20 characters about what you need. You have up to 800.',
-  consent: 'Confirm that Mary-Jo can use these details to reply.'
-}
+const fieldMessages = contactFieldMessages
 
 const errors = computed(() => getContactErrors(form))
 
@@ -266,21 +242,21 @@ const isValid = computed(() => !Object.values(errors.value).some(Boolean))
 const messageLength = computed(() => form.message.trim().length)
 const today = new Date().toISOString().slice(0, 10)
 const visibleErrors = computed(() =>
-  (Object.keys(fieldMessages) as RequiredField[])
+  contactRequiredFields
     .filter((field) => touched[field] && errors.value[field])
     .map((field) => fieldMessages[field])
 )
 
-function touch(field: RequiredField) {
+function touch(field: keyof typeof fieldMessages) {
   touched[field] = true
 }
 
-function showError(field: RequiredField) {
+function showError(field: keyof typeof fieldMessages) {
   return touched[field] && errors.value[field]
 }
 
 function handleSubmit(event: Event) {
-  Object.keys(errors.value).forEach((field) => {
+  contactRequiredFields.forEach((field) => {
     touched[field] = true
   })
 
