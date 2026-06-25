@@ -2,15 +2,12 @@ import type { ContactErrors, ContactFormInput } from '~/types/contact'
 
 export const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const guestCountPattern = /^[1-9]\d*$/
+const budgetPattern = /^[1-9]\d*$/
 const minimumMessageLength = 20
 const maximumMessageLength = 800
 
 function text(value: string | number | null | undefined) {
   return String(value ?? '').trim()
-}
-
-function hasConsent(value: boolean | string | null | undefined) {
-  return value === true || value === 'true' || value === 'on'
 }
 
 function isPastDate(value: string) {
@@ -26,22 +23,25 @@ function isPastDate(value: string) {
 export function getContactErrors(input: ContactFormInput): ContactErrors {
   const name = text(input.name)
   const email = text(input.email)
+  const company = text(input.company)
   const eventType = text(input.eventType)
   const date = text(input.date)
   const location = text(input.location)
   const guestCount = text(input.guestCount)
+  const budget = text(input.budget)
   const message = text(input.message)
   const website = text(input.website)
 
   return {
     name: name.length === 0,
     email: !emailPattern.test(email),
+    company: company.length === 0,
     eventType: eventType.length === 0,
     date: date.length === 0 || isPastDate(date),
     location: location.length === 0,
     guestCount: !guestCountPattern.test(guestCount),
+    budget: !budgetPattern.test(budget),
     message: message.length < minimumMessageLength || message.length > maximumMessageLength,
-    consent: !hasConsent(input.consent),
     website: website.length > 0
   }
 }

@@ -4,7 +4,7 @@ export const brand = {
   label: 'CORPORATE EVENTS',
   founder: 'Mary-Josephine Murphy',
   tagline: 'Your event, thoughtfully planned.',
-  serviceArea: 'UK/Ireland',
+  serviceArea: 'Global',
   colours: {
     berry: '#3d1a2e',
     fuchsia: '#c24d7e',
@@ -18,40 +18,30 @@ export const siteConfig = {
   meta: {
     title: 'Mary-Jo Corporate Events | Your event, thoughtfully planned',
     description:
-      'Warm, thoughtful corporate event planning for conferences, away days, launches, award nights, and leadership retreats across the UK and Ireland.',
+      'Warm, thoughtful corporate event planning for away days, launches, and award nights.',
     url: 'https://maryjo-events.com'
   },
   contact: {
-    email: 'tochimba26@gmail.com',
+    email: 'murphy.mary@me.com',
     formAction:
-      'https://script.google.com/macros/s/AKfycby3qsSzH0HD6lqffPJLcSVXnm7vXv5K_oJRTzyURV70qeje3aCL2_veW3HUikoiZUUX9A/exec',
+      'https://script.google.com/macros/s/AKfycbyVjfXm5LsEPj_GjhARfEiWygtoyDNx41LPYDkbQe6nC3yqya_SrD4tjW6z3nUPLzrQUQ/exec',
     calendarUrl: ''
   }
 } as const
 
 export const navigation = [
-  { label: 'Services', href: '#services' },
-  { label: 'Approach', href: '#approach' },
-  { label: 'About', href: '#about' },
-  { label: 'Event fit', href: '#event-fit' },
-  { label: 'What to expect', href: '#proof' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Services', href: '#event-fit' },
   { label: 'Contact', href: '#contact' }
 ] as const
 
+export const homepageSections = {
+  services: false,
+  approach: false,
+  about: false,
+  proof: false
+} as const
+
 export const services = [
-  {
-    title: 'Conferences',
-    description:
-      'Multi-session days that need to run smoothly, from registration desks to the closing remarks.',
-    icon: 'presentation'
-  },
-  {
-    title: 'Executive summits',
-    description:
-      'Smaller, higher-stakes gatherings where the details and the atmosphere both matter.',
-    icon: 'crown'
-  },
   {
     title: 'Award nights',
     description:
@@ -69,12 +59,6 @@ export const services = [
     description:
       'Days out of the office that actually feel worthwhile, with the logistics quietly taken care of.',
     icon: 'users'
-  },
-  {
-    title: 'Networking evenings',
-    description:
-      'Relaxed, well-paced evenings where your guests can connect without anything feeling stiff.',
-    icon: 'wine'
   }
 ] as const
 
@@ -109,33 +93,6 @@ export const processSteps = [
   }
 ] as const
 
-export const eventTypes = [
-  {
-    title: 'A first big conference',
-    description: 'The one where you want everything to feel considered and calm.'
-  },
-  {
-    title: 'A leadership retreat',
-    description: 'Time away that needs structure without feeling rigid.'
-  },
-  {
-    title: 'A company away day',
-    description: 'A proper break from the desk that still earns its place.'
-  },
-  {
-    title: 'A brand or product moment',
-    description: 'A launch or reveal that deserves a real sense of occasion.'
-  },
-  {
-    title: 'An industry mixer',
-    description: 'An evening built around easy conversation and good timing.'
-  },
-  {
-    title: 'An awards or ceremony',
-    description: 'A night of recognition, planned so it runs beautifully.'
-  }
-] as const
-
 export const proofPoints = [
   {
     title: 'A clear written plan after discovery',
@@ -160,34 +117,6 @@ export const proofPoints = [
     description:
       'You hear from me in plain language, kept in the loop without being buried in noise.',
     icon: 'message-circle'
-  }
-] as const
-
-export const faqs = [
-  {
-    question: 'You are new to the industry - why should I trust you with my event?',
-    answer:
-      'I am honest about being new, and I think that is a strength. Every brief still feels genuinely exciting to me, so you get real care and full attention rather than someone running on autopilot.'
-  },
-  {
-    question: 'What size of business do you work with?',
-    answer:
-      'Businesses of all sizes. Whether it is your first big conference or a regular fixture in the calendar, I would love to hear about it. The brief matters more to me than the headcount.'
-  },
-  {
-    question: 'Where do you work?',
-    answer:
-      'Across the UK and Ireland. Tell me where your event needs to happen and I will figure out how to make it work.'
-  },
-  {
-    question: 'How do we start?',
-    answer:
-      'We start with a conversation. You tell me what you have in mind, I listen properly, and then I shape that into a clear written plan. There is no pressure and no jargon.'
-  },
-  {
-    question: 'How involved do I need to be?',
-    answer:
-      'As much or as little as you like. Some people want to be in every detail, others want to hand it over and hear warm updates along the way. Both are completely fine.'
   }
 ] as const
 

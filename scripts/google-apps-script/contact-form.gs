@@ -1,18 +1,18 @@
 var FIELD_MAP = {
   name: { title: 'Name', required: true, types: ['TEXT'] },
   email: { title: 'Email', required: true, types: ['TEXT'] },
-  company: { title: 'Company', required: false, types: ['TEXT'] },
+  company: { title: 'Company', required: true, types: ['TEXT'] },
   eventType: { title: 'Event type', required: true, types: ['LIST', 'MULTIPLE_CHOICE'] },
   date: { title: 'Approximate date', required: true, types: ['DATE'] },
   location: { title: 'Location', required: true, types: ['TEXT'] },
   guestCount: { title: 'Guest count', required: true, types: ['TEXT'] },
-  budget: { title: 'Budget range', required: false, types: ['LIST', 'MULTIPLE_CHOICE'] },
-  message: { title: 'Tell me what you need', required: true, types: ['PARAGRAPH_TEXT'] },
-  consent: { title: 'Consent', required: true, types: ['CHECKBOX', 'TEXT'] }
+  budget: { title: 'Budget range', required: true, types: ['TEXT'] },
+  message: { title: 'Tell me what you need', required: true, types: ['PARAGRAPH_TEXT'] }
 }
 
 var EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 var GUEST_COUNT_PATTERN = /^[1-9]\d*$/
+var BUDGET_PATTERN = /^[1-9]\d*$/
 var MINIMUM_MESSAGE_LENGTH = 20
 var MAXIMUM_MESSAGE_LENGTH = 800
 
@@ -90,15 +90,15 @@ function getContactErrors(input) {
 
   if (!values.name) errors.push('name')
   if (!EMAIL_PATTERN.test(values.email)) errors.push('email')
+  if (!values.company) errors.push('company')
   if (!values.eventType) errors.push('eventType')
   if (!values.date || isPastDate(values.date)) errors.push('date')
   if (!values.location) errors.push('location')
   if (!GUEST_COUNT_PATTERN.test(values.guestCount)) errors.push('guestCount')
+  if (!BUDGET_PATTERN.test(values.budget)) errors.push('budget')
   if (values.message.length < MINIMUM_MESSAGE_LENGTH || values.message.length > MAXIMUM_MESSAGE_LENGTH) {
     errors.push('message')
   }
-  if (!hasConsent(input.consent)) errors.push('consent')
-
   return errors
 }
 
@@ -112,8 +112,7 @@ function normalizedPayload(input) {
     location: text(input.location),
     guestCount: text(input.guestCount),
     budget: text(input.budget),
-    message: text(input.message),
-    consent: hasConsent(input.consent) ? 'Yes' : ''
+    message: text(input.message)
   }
 }
 
@@ -184,14 +183,6 @@ function createItemResponse(item, itemType, value) {
     return multipleChoiceItem.createResponse(value)
   }
 
-  if (itemType === String(FormApp.ItemType.CHECKBOX)) {
-    var choices = item.asCheckboxItem().getChoices()
-    if (!choices.length) {
-      throw new Error('Consent checkbox question needs at least one choice.')
-    }
-    return item.asCheckboxItem().createResponse([choices[0].getValue()])
-  }
-
   throw new Error('Unsupported Google Form item type: ' + itemType)
 }
 
@@ -211,9 +202,7 @@ function sendNotificationEmail(recipient, input) {
     'Budget range: ' + optional(values.budget),
     '',
     'Message:',
-    values.message,
-    '',
-    'Consent: ' + values.consent
+    values.message
   ].join('\n')
 
   MailApp.sendEmail({
@@ -230,9 +219,12 @@ function renderRedirect(url) {
   return HtmlService.createHtmlOutput(
     '<!doctype html><html><head>' +
       '<meta charset="utf-8">' +
+      '<base target="_top">' +
       '<meta http-equiv="refresh" content="0; url=' + safeUrl + '">' +
       '<script>window.location.replace(' + JSON.stringify(url) + ');</script>' +
-      '</head><body><p>Thank you. Redirecting...</p></body></html>'
+      '</head><body><p>Thank you. Redirecting...</p><p><a href="' +
+      safeUrl +
+      '">Continue to Mary-Jo Corporate Events</a></p></body></html>'
   )
 }
 
@@ -270,10 +262,6 @@ function isPastDate(value) {
   var today = new Date()
   today.setHours(0, 0, 0, 0)
   return date < today
-}
-
-function hasConsent(value) {
-  return value === true || value === 'true' || value === 'on' || value === 'Yes'
 }
 
 function text(value) {

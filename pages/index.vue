@@ -5,24 +5,17 @@
     <main>
       <section class="hero section-shell" aria-labelledby="hero-title">
         <Reveal class-name="hero__copy">
-          <p class="hero__badge">
-            <MapPin :size="15" aria-hidden="true" />
-            Corporate events / UK & Ireland
-          </p>
           <h1 id="hero-title">{{ brand.tagline }}</h1>
           <p class="hero__lead">
             I am Mary-Jo. I put real thought into every event I take on, from the first conversation to the final goodbye.
-          </p>
-          <p class="hero__text">
-            New to the industry, but not to hard work or attention to detail. I ask careful questions, keep the plan clear, and care about the details other people overlook.
           </p>
           <div class="hero__actions">
             <a class="button button--primary" href="#contact">
               Tell me about your event
               <ArrowRight :size="18" aria-hidden="true" />
             </a>
-            <a class="button button--ghost" href="#approach">
-              See my approach
+            <a class="button button--ghost" href="#event-fit">
+              See what I plan
               <ArrowDown :size="18" aria-hidden="true" />
             </a>
           </div>
@@ -37,17 +30,16 @@
             priority
           />
         </Reveal>
-        <a class="hero__scroll" href="#services" aria-label="Scroll to services">
+        <a class="hero__scroll" href="#event-fit" aria-label="Scroll to services">
           <span />
         </a>
       </section>
 
-      <section id="services" class="section-shell section-block" aria-labelledby="services-title">
+      <section v-if="homepageSections.services" id="services" class="section-shell section-block" aria-labelledby="services-title">
         <Reveal as="header">
           <SectionHeader
             eyebrow="What I plan"
             title="Events I would love to help with"
-            text="Whatever the occasion, I will figure out how to make it happen and keep the details from slipping through the cracks."
           />
         </Reveal>
         <div class="service-grid">
@@ -63,7 +55,7 @@
 
       <MarqueeBand :items="marqueeItems" />
 
-      <section id="approach" class="approach section-shell section-block" aria-labelledby="approach-title">
+      <section v-if="homepageSections.approach" id="approach" class="approach section-shell section-block" aria-labelledby="approach-title">
         <Reveal>
           <SectionHeader
             eyebrow="How I work"
@@ -82,7 +74,7 @@
         </div>
       </section>
 
-      <section id="about" class="about section-shell section-block" aria-labelledby="about-title">
+      <section v-if="homepageSections.about" id="about" class="about section-shell section-block" aria-labelledby="about-title">
         <Reveal class-name="about__image">
           <ImagePanel
             :src="publicAsset('/images/process-details.png')"
@@ -110,28 +102,31 @@
         <div class="section-shell">
           <Reveal>
             <SectionHeader
-              eyebrow="Is this for you?"
+              eyebrow="Services"
               title="For businesses of all sizes"
-              text="If you recognise your event below, we should talk. The brief matters to me far more than the headcount."
+              text="If you recognise your event below, we should talk."
               on-dark
             />
           </Reveal>
           <div class="event-grid">
             <Reveal
-              v-for="(eventType, index) in eventTypes"
-              :key="eventType.title"
+              v-for="(service, index) in services"
+              :key="service.title"
               as="article"
               :delay="index * 65"
               class-name="event-card"
             >
-              <p class="card-title">{{ eventType.title }}</p>
-              <p>{{ eventType.description }}</p>
+              <span class="event-card__icon" aria-hidden="true">
+                <component :is="serviceIcon(service.icon)" :size="20" stroke-width="1.8" />
+              </span>
+              <p class="card-title">{{ service.title }}</p>
+              <p>{{ service.description }}</p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      <section id="proof" class="section-shell section-block proof" aria-labelledby="proof-title">
+      <section v-if="homepageSections.proof" id="proof" class="section-shell section-block proof" aria-labelledby="proof-title">
         <Reveal>
           <SectionHeader
             eyebrow="What to expect"
@@ -162,8 +157,6 @@
         </p>
       </section>
 
-      <FAQAccordion :faqs="faqs" />
-
       <section id="contact" class="contact section-shell section-block" aria-labelledby="contact-title">
         <Reveal class-name="contact__intro">
           <SectionHeader
@@ -181,7 +174,7 @@
           <Wordmark class="contact__wordmark" />
         </Reveal>
         <Reveal :delay="120">
-          <ContactForm :form-action="formAction" />
+          <ContactForm :form-action="formAction" :success-path="thankYouPath" />
         </Reveal>
       </section>
     </main>
@@ -191,10 +184,6 @@
         <div>
           <Wordmark on-dark />
           <p>Freelance corporate event planning, thoughtfully done. I would love to hear what you have in mind.</p>
-          <span>
-            <MapPin :size="17" aria-hidden="true" />
-            Working across the {{ brand.serviceArea }}
-          </span>
         </div>
         <nav aria-label="Footer navigation">
           <a v-for="item in footerNavigation" :key="item.href" :href="item.href">{{ item.label }}</a>
@@ -215,7 +204,6 @@ import {
   ClipboardList,
   FileText,
   Mail,
-  MapPin,
   MessageCircle,
   Quote,
   Sparkles
@@ -223,8 +211,7 @@ import {
 import { computed } from 'vue'
 import {
   brand,
-  eventTypes,
-  faqs,
+  homepageSections,
   marqueeItems,
   navigation,
   processSteps,
@@ -232,6 +219,7 @@ import {
   services,
   siteConfig
 } from '~/data/site'
+import { serviceIcons, type ServiceIcon } from '~/utils/serviceIcons'
 
 const runtimeConfig = useRuntimeConfig()
 const baseUrl = runtimeConfig.app.baseURL
@@ -249,13 +237,9 @@ const routePath = (path: string) => {
 }
 
 const formAction = computed(() => routePath(String(runtimeConfig.public.formAction || siteConfig.contact.formAction)))
+const thankYouPath = computed(() => routePath('/thank-you'))
 const footerNavigation = [
-  { label: 'Services overview', href: '#services' },
-  { label: 'Planning approach', href: '#approach' },
-  { label: 'About Mary-Jo', href: '#about' },
-  { label: 'Event fit guide', href: '#event-fit' },
-  { label: 'Working expectations', href: '#proof' },
-  { label: 'FAQ answers', href: '#faq' },
+  { label: 'Services overview', href: '#event-fit' },
   { label: 'Contact Mary-Jo', href: '#contact' }
 ]
 
@@ -268,6 +252,10 @@ const proofIcons = {
 
 function proofIcon(icon: keyof typeof proofIcons) {
   return proofIcons[icon]
+}
+
+function serviceIcon(icon: ServiceIcon) {
+  return serviceIcons[icon]
 }
 
 useSeoMeta({

@@ -36,7 +36,12 @@ export default defineNuxtConfig({
         { name: 'twitter:description', content: siteConfig.meta.description },
         { name: 'twitter:image', content: socialPreviewUrl }
       ],
-      link: [{ rel: 'canonical', href: siteUrl }]
+      link: [
+        { rel: 'canonical', href: siteUrl },
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/icons/favicon-32x32.png' },
+        { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/icons/favicon-192x192.png' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/icons/apple-touch-icon.png' }
+      ]
     }
   },
   runtimeConfig: {

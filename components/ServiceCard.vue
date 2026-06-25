@@ -9,23 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import { Crown, Presentation, Rocket, Trophy, Users, Wine } from 'lucide-vue-next'
 import { computed } from 'vue'
+import { serviceIcons, type ServiceIcon } from '~/utils/serviceIcons'
 
 const props = defineProps<{
   title: string
   description: string
-  icon: 'presentation' | 'crown' | 'trophy' | 'rocket' | 'users' | 'wine'
+  icon: ServiceIcon
 }>()
 
-const icons = {
-  presentation: Presentation,
-  crown: Crown,
-  trophy: Trophy,
-  rocket: Rocket,
-  users: Users,
-  wine: Wine
-}
-
-const iconComponent = computed(() => icons[props.icon])
+const iconComponent = computed(() => serviceIcons[props.icon])
 </script>

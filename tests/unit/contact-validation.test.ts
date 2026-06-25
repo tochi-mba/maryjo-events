@@ -2,27 +2,29 @@ import { describe, expect, it } from 'vitest'
 import { getContactErrors, isContactValid } from '../../utils/contactValidation'
 
 describe('contact validation', () => {
-  it('requires name, valid email, useful message, and consent', () => {
+  it('requires all visible fields', () => {
     expect(
       getContactErrors({
         name: '',
         email: 'not-an-email',
+        company: '',
         eventType: '',
         date: '',
         location: '',
         guestCount: '',
-        message: 'Too short',
-        consent: false
+        budget: '',
+        message: 'Too short'
       })
     ).toEqual({
       name: true,
       email: true,
+      company: true,
       eventType: true,
       date: true,
       location: true,
       guestCount: true,
+      budget: true,
       message: true,
-      consent: true,
       website: false
     })
   })
@@ -32,12 +34,13 @@ describe('contact validation', () => {
       isContactValid({
         name: 'Ava',
         email: 'ava@example.com',
+        company: 'Ava Studio',
         eventType: 'Product launch',
         date: '2099-06-19',
         location: 'London',
         guestCount: '80',
+        budget: '5000',
         message: 'I need help planning a leadership retreat.',
-        consent: true,
         website: ''
       })
     ).toBe(true)
@@ -48,12 +51,13 @@ describe('contact validation', () => {
       isContactValid({
         name: 'Ava',
         email: 'ava@example.com',
+        company: 'Ava Studio',
         eventType: 'Product launch',
         date: '2099-06-19',
         location: 'London',
         guestCount: '80',
+        budget: '5000',
         message: 'I need help planning a product launch for around 80 guests.',
-        consent: true,
         website: 'https://spam.example'
       })
     ).toBe(false)

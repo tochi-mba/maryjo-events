@@ -18,15 +18,14 @@ if (!endpoint || endpoint === '/thank-you') {
 const timestamp = new Date().toISOString()
 const payload = {
   name: `MaryJo Smoke Test ${timestamp}`,
-  email: args.get('email') || 'tochimba26@gmail.com',
+  email: args.get('email') || 'murphy.mary@me.com',
   company: args.get('company') || 'Mary-Jo Events test',
   eventType: args.get('eventType') || 'Product launch',
   date: args.get('date') || futureDate(),
   location: args.get('location') || 'London',
   guestCount: args.get('guestCount') || '12',
-  budget: args.get('budget') || 'I am not sure yet',
+  budget: args.get('budget') || '5000',
   message: `This is an automated smoke test from the maryjo-events repo at ${timestamp}. Please delete this test enquiry after confirming delivery.`,
-  consent: 'on',
   website: '',
   diagnostic: 'json'
 }
@@ -79,7 +78,7 @@ if (!looksSuccessful) {
   process.exit(1)
 }
 
-console.log('\nSmoke test submitted. Check the Google Form responses and tochimba26@gmail.com inbox for the test enquiry.')
+console.log('\nSmoke test submitted. Check the Google Form responses and murphy.mary@me.com inbox for the test enquiry.')
 
 async function readDefaultEndpoint() {
   const siteConfig = await readFile(new URL('../data/site.ts', import.meta.url), 'utf8')
