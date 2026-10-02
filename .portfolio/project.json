@@ -1,0 +1,17 @@
+{
+  "$schema": "https://tochi-mba.github.io/schema/project.schema.json",
+  "slug": "maryjo-events",
+  "name": "Mary-Jo Corporate Events",
+  "tagline": "A static client site with a branded contact form that posts to Google Apps Script.",
+  "description": "A static Nuxt, Vue and TypeScript website for a corporate events business. The branded contact form is built into the static site and posts to a Google Apps Script web app in production, with a local fallback route for development. Typecheck, lint, unit and end-to-end tests.",
+  "highlights": [
+    "Nuxt static generation",
+    "Serverless contact form via Apps Script",
+    "Playwright end-to-end tests"
+  ],
+  "stack": ["Nuxt", "Vue", "TypeScript", "Playwright"],
+  "category": "web",
+  "status": "stable",
+  "order": 300,
+  "display": true
+}
